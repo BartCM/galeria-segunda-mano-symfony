@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block body %}
+<h1>Panel de Administración</h1>
+
+<p>
+    Bienvenido, <strong>{{ app.user.email }}</strong>
+</p>
+
+<hr>
+
+<ul>
+    <li>
+        <a href="{{ path('app_categoria_index') }}">Gestionar categorías</a>
+    </li>
+    <li>
+        <a href="{{ path('app_articulo_index') }}">Gestionar artículos</a>
+    </li>
+</ul>
+{% endblock %}
+
+
+

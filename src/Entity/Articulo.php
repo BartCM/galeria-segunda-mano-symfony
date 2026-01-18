@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticuloRepository;
+use App\Repository\ArticuloRepositorio;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ArticuloRepository::class)]
+#[ORM\Entity(repositoryClass: ArticuloRepositorio::class)]
 class Articulo
 {
     #[ORM\Id]

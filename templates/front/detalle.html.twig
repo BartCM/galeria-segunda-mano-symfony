@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ articulo.titulo }}{% endblock %}
+
+{% block body %}
+<h1>{{ articulo.titulo }}</h1>
+
+{% if articulo.imagen %}
+    <img src="{{ asset('uploads/articulos/' ~ articulo.imagen) }}"
+         style="max-width:400px; margin-bottom:20px;">
+{% endif %}
+
+<p><strong>Precio:</strong> {{ articulo.precio }} €</p>
+<p><strong>Categoría:</strong> {{ articulo.categoria.nombre }}</p>
+<p><strong>Publicado por:</strong> {{ articulo.usuario.email }}</p>
+
+<p>{{ articulo.descripcion }}</p>
+
+<p>
+    <a href="{{ path('front_index') }}">← Volver al listado</a>
+</p>
+{% endblock %}

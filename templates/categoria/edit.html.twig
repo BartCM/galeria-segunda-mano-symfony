@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edita Categoria{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="admin-container">
+    <h1>{{ title|default('Categoría') }}</h1>
+
+    {{ include('categoria/_form.html.twig') }}
+
+    <p style="margin-top:20px;">
+        <a href="{{ path('app_categoria_index') }}">← Volver al listado</a>
+    </p>
+</div>
+{% endblock %}
+

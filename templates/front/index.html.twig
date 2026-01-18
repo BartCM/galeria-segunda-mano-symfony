@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Artículos en venta{% endblock %}
+
+{% block body %}
+<div class="front-container">
+    <h1>Artículos en venta</h1>
+
+    <div class="front-grid">
+        {% for articulo in articulos %}
+            <div class="front-card">
+                {% if articulo.imagen %}
+                    <img src="{{ asset('uploads/articulos/' ~ articulo.imagen) }}"
+                         class="front-card-img">
+                {% endif %}
+
+                <div class="front-card-body">
+                    <h3>{{ articulo.titulo }}</h3>
+
+                    <p class="categoria">
+                        {{ articulo.categoria.nombre }}
+                    </p>
+
+                    <p class="descripcion">
+                        {{ articulo.descripcion|slice(0, 80) }}...
+                    </p>
+
+                    <div class="price">
+                        {{ articulo.precio }} €
+                    </div>
+
+                    <a href="{{ path('front_articulo_detalle', {id: articulo.id}) }}"
+                       class="front-button">
+                        Ver detalle
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <p>No hay artículos disponibles.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

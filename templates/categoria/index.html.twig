@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorías{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="admin-container">
+    <h1>Listado de categorías</h1>
+
+    <a href="{{ path('app_categoria_new') }}" class="admin-button">
+        Nueva categoría
+    </a>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Fecha de creación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categoria in categorias %}
+            <tr>
+                <td>{{ categoria.nombre }}</td>
+                <td>{{ categoria.fechaCreacion|date('d/m/Y H:i') }}</td>
+                <td class="admin-actions">
+                    <a href="{{ path('app_categoria_edit', {'id': categoria.id}) }}" class="edit">
+                        Editar
+                    </a>
+
+                    {{ include('categoria/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No hay categorías.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p style="margin-top:20px;">
+        <a href="{{ path('admin_dashboard') }}">← Volver al panel</a>
+    </p>
+</div>
+{% endblock %}

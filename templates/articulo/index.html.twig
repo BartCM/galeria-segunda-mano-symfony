@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Artículos{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="admin-container">
+
+    <div class="admin-header">
+        <h1>Listado de artículos</h1>
+
+        <a href="{{ path('app_articulo_new') }}" class="admin-button">
+            Nuevo artículo
+        </a>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for articulo in articulos %}
+            <tr>
+                <td>{{ articulo.titulo }}</td>
+                <td>{{ articulo.precio }} €</td>
+                <td>{{ articulo.categoria.nombre }}</td>
+                <td>{{ articulo.usuario.email }}</td>
+                <td>{{ articulo.fechaCreacion|date('d/m/Y') }}</td>
+                <td class="admin-actions">
+                    <a href="{{ path('app_articulo_edit', {'id': articulo.id}) }}" class="edit">
+                        Editar
+                    </a>
+
+                    {{ include('articulo/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" style="text-align:center; padding:20px; color:#777;">
+                    No hay artículos creados todavía.
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p style="margin-top:20px;">
+        <a href="{{ path('admin_dashboard') }}">← Volver al panel</a>
+    </p>
+
+</div>
+{% endblock %}

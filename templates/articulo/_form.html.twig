@@ -1,0 +1,53 @@
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+    {{ form_row(form.titulo) }}
+    {{ form_row(form.descripcion) }}
+    {{ form_row(form.precio) }}
+    {{ form_row(form.categoria) }}
+
+    {# Imagen actual (solo en editar) #}
+    {% if articulo is defined and articulo.imagen %}
+        <div style="margin-bottom:10px;">
+            <p>Imagen actual:</p>
+            <img src="{{ asset('uploads/articulos/' ~ articulo.imagen) }}"
+                 style="max-width:200px; border:1px solid #ccc; padding:5px;">
+        </div>
+    {% endif %}
+
+    {# Campo subir nueva imagen #}
+    {{ form_row(form.imagen, {
+        'attr': {
+            'onchange': 'previewImage(event)'
+        }
+    }) }}
+
+    {# Vista previa de nueva imagen #}
+    <div style="margin-top:10px;">
+        <img id="image-preview"
+             style="display:none; max-width:200px; border:1px solid #ccc; padding:5px;">
+    </div>
+
+    <button type="submit" class="admin-button">
+        Guardar
+    </button>
+
+{{ form_end(form) }}
+
+<script>
+function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('image-preview');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+
+
+
