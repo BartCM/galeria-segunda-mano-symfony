@@ -135,31 +135,3 @@ form input[type="text"] {
     margin: 0;
 }
 
-.admin-panel {
-    max-width: 600px;
-}
-
-.admin-welcome {
-    margin-bottom: 20px;
-    font-size: 15px;
-}
-
-.admin-menu {
-    list-style: none;
-    padding: 0;
-}
-
-.admin-menu li {
-    margin-bottom: 10px;
-}
-
-.admin-menu a {
-    text-decoration: none;
-    color: #0d6efd;
-    font-weight: 500;
-}
-
-.admin-menu a:hover {
-    text-decoration: underline;
-}
-
