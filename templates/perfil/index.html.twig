@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mi perfil{% endblock %}
+
+{% block body %}
+<div class="page-default">
+
+    <h1>Mi perfil</h1>
+
+    <ul>
+        <li><strong>Usuario:</strong> {{ app.user.nombreUsuario }}</li>
+        <li><strong>Email:</strong> {{ app.user.email }}</li>
+        <li><strong>Rol:</strong>
+            {% if is_granted('ROLE_ADMIN') %}
+                Administrador
+            {% else %}
+                Usuario normal
+            {% endif %}
+        </li>
+    </ul>
+
+    <p style="margin-top:20px;">
+        <a href="{{ path('front_index') }}">← Volver a la página principal</a>
+    </p>
+
+</div>
+{% endblock %}

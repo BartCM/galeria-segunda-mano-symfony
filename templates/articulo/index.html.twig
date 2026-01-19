@@ -12,14 +12,15 @@
     <div class="admin-header">
         <h1>Listado de artículos</h1>
 
-        <a href="{{ path('app_articulo_new') }}" class="admin-button">
-            Nuevo artículo
+        <a href="{{ path('app_articulo_new') }}" class="admin-btn">
+            + Nuevo artículo
         </a>
     </div>
 
     <table class="admin-table">
         <thead>
             <tr>
+                <th>Imagen</th>
                 <th>Título</th>
                 <th>Precio</th>
                 <th>Categoría</th>
@@ -31,22 +32,31 @@
         <tbody>
         {% for articulo in articulos %}
             <tr>
+                <td>
+                    {% if articulo.imagen %}
+                        <img src="{{ asset('uploads/articulos/' ~ articulo.imagen) }}"
+                             class="admin-img">
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
                 <td>{{ articulo.titulo }}</td>
                 <td>{{ articulo.precio }} €</td>
                 <td>{{ articulo.categoria.nombre }}</td>
                 <td>{{ articulo.usuario.email }}</td>
                 <td>{{ articulo.fechaCreacion|date('d/m/Y') }}</td>
                 <td class="admin-actions">
-                    <a href="{{ path('app_articulo_edit', {'id': articulo.id}) }}" class="edit">
+                    <a href="{{ path('app_articulo_edit', {'id': articulo.id}) }}"
+                       class="admin-btn admin-btn-secondary">
                         Editar
                     </a>
 
-                    {{ include('articulo/_delete_form.html.twig') }}
+                    {{ include('articulo/_delete_form.html.twig', { articulo: articulo }) }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6" style="text-align:center; padding:20px; color:#777;">
+                <td colspan="7" style="text-align:center; padding:20px; color:#777;">
                     No hay artículos creados todavía.
                 </td>
             </tr>
@@ -54,9 +64,10 @@
         </tbody>
     </table>
 
-    <p style="margin-top:20px;">
+    <div class="admin-back">
         <a href="{{ path('admin_dashboard') }}">← Volver al panel</a>
-    </p>
+    </div>
 
 </div>
 {% endblock %}
+

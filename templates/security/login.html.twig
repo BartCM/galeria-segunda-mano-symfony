@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Iniciar sesión{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+{% endblock %}
 {% block page_class %}page-auth{% endblock %}
+
 
 {% block body %}
 <div class="auth-container">

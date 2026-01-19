@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestión de usuarios{% endblock %}
+
+{% block body %}
+<div class="admin-container">
+
+    <h1>Gestión de usuarios</h1>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.roles|join(', ') }}</td>
+                <td>
+                    {% if 'ROLE_ADMIN' not in usuario.roles %}
+                        <form method="post"
+                              action="{{ path('admin_usuario_delete', {id: usuario.id}) }}"
+                              onsubmit="return confirm('¿Eliminar usuario?');">
+                            <input type="hidden" name="_token"
+                                   value="{{ csrf_token('delete' ~ usuario.id) }}">
+                            <button class="btn btn-danger">Eliminar</button>
+                        </form>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="admin-back">
+        <a href="{{ path('admin_dashboard') }}">← Volver al panel</a>
+    </p>
+
+</div>
+{% endblock %}

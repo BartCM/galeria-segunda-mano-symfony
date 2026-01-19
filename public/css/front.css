@@ -13,38 +13,23 @@
     text-align: center;
 }
 
-.front-nav .nav-left a {
+.front-nav .nav-left a,
+.front-nav .nav-right a {
     color: #fff;
     text-decoration: none;
     font-weight: 500;
-}
-
-.front-nav .nav-left a:hover {
-    text-decoration: underline;
-}
-
-.front-nav .nav-right {
-    text-align: right;
-}
-
-.front-nav a {
-    color: #fff;
-    text-decoration: none;
     margin-left: 15px;
-    font-weight: 500;
 }
 
 .front-nav a:hover {
     text-decoration: underline;
 }
 
-
 .front-container {
     max-width: 1100px;
     margin: 30px auto;
     padding: 0 20px;
 }
-
 
 .front-grid {
     display: flex;
@@ -59,14 +44,7 @@
     border-radius: 6px;
     padding: 10px;
     background-color: #fff;
-    align-items: flex-start;
     max-width: 500px;
-}
-
-
-.front-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .front-card-img {
@@ -76,129 +54,36 @@
     border-radius: 6px;
 }
 
-.front-card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-
 .front-card-body h3 {
     font-size: 16px;
-    margin: 0 0 6px 0;
+    margin-bottom: 6px;
 }
 
 .front-card-body .categoria {
     font-size: 13px;
     color: #666;
-    margin-bottom: 6px;
 }
 
 .front-card-body .descripcion {
     font-size: 14px;
-    margin-bottom: 8px;
 }
 
 .front-card-body .price {
-    font-size: 15px;
     font-weight: bold;
-    margin-bottom: 8px;
 }
 
-.front-card-body a {
-    display: inline-block;
-    text-decoration: none;
-    color: #0d6efd;
-    font-weight: 500;
-}
 .front-button {
-    display: inline-block;
     padding: 7px 14px;
     background-color: #0d6efd;
-    color: #ffffff !important;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-
-.front-button:hover {
-    background-color: #0b5ed7;
-}
-
-.auth-container {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background-color: #fff;
-}
-
-.auth-container h1 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.auth-container form div {
-    margin-bottom: 12px;
-}
-
-.auth-container input {
-    width: 100%;
-    padding: 6px;
-}
-
-.auth-container button {
-    width: 100%;
-    padding: 8px;
-    background-color: #0d6efd;
     color: #fff;
-    border: none;
+    text-decoration: none;
     border-radius: 4px;
 }
 
-/* Páginas normales (front + admin) */
-.page-default {
-    padding: 20px;
+.nav-user {
+    margin-right: 15px;
+    font-weight: 600;
+    color: #ddd;
+    font-size: 14px;
 }
 
-/* SOLO login y registro */
-.page-auth {
-    min-height: calc(100vh - 64px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.admin-panel {
-    max-width: 600px;
-}
-
-.admin-welcome {
-    margin-bottom: 20px;
-    font-size: 15px;
-}
-
-.admin-menu {
-    list-style: none;
-    padding: 0;
-}
-
-.admin-menu li {
-    margin-bottom: 10px;
-}
-
-.admin-menu a {
-    text-decoration: none;
-    color: #0d6efd;
-    font-weight: 500;
-}
-
-.admin-menu a:hover {
-    text-decoration: underline;
-}
-.admin-panel {
-    border: 2px solid red;
-}

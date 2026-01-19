@@ -18,7 +18,19 @@
 
     <div class="nav-right">
         {% if app.user %}
-            <span>{{ app.user.email }}</span>
+            <span class="nav-user">
+                {{ app.user.nombreUsuario }}
+            </span>
+
+            <a href="{{ path('app_perfil') }}">Mi perfil</a>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin_dashboard') }}">Panel admin</a>
+                <a href="{{ path('admin_usuario_index') }}">Usuarios</a>
+            {% endif %}
+
+            <a href="{{ path('app_articulo_index') }}">Mis artículos</a>
+
             <a href="{{ path('app_logout') }}">Cerrar sesión</a>
         {% else %}
             <a href="{{ path('app_login') }}">Iniciar sesión</a>
@@ -26,6 +38,7 @@
         {% endif %}
     </div>
 </nav>
+
 
 <div class="{% block page_class %}page-default{% endblock %}">
     {% block body %}{% endblock %}

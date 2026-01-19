@@ -41,18 +41,25 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
-
-
-   public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-    {
+   public function onAuthenticationSuccess(
+    Request $request,
+    TokenInterface $token,
+    string $firewallName
+    ): ?Response {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // Redirección por defecto tras login
-        return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
-    }
+        if (in_array('ROLE_ADMIN', $token->getRoleNames(), true)) {
+            return new RedirectResponse(
+                $this->urlGenerator->generate('admin_dashboard')
+            );
+        }
 
+        return new RedirectResponse(
+            $this->urlGenerator->generate('app_articulo_index')
+        );
+    }
 
     protected function getLoginUrl(Request $request): string
     {

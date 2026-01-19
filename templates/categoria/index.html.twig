@@ -2,17 +2,15 @@
 
 {% block title %}Categorías{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-{% endblock %}
-
 {% block body %}
 <div class="admin-container">
-    <h1>Listado de categorías</h1>
 
-    <a href="{{ path('app_categoria_new') }}" class="admin-button">
-        Nueva categoría
-    </a>
+    <div class="admin-header">
+        <h1>Listado de categorías</h1>
+        <a href="{{ path('app_categoria_new') }}" class="admin-btn">
+            Nueva categoría
+        </a>
+    </div>
 
     <table class="admin-table">
         <thead>
@@ -28,7 +26,8 @@
                 <td>{{ categoria.nombre }}</td>
                 <td>{{ categoria.fechaCreacion|date('d/m/Y H:i') }}</td>
                 <td class="admin-actions">
-                    <a href="{{ path('app_categoria_edit', {'id': categoria.id}) }}" class="edit">
+                    <a href="{{ path('app_categoria_edit', {id: categoria.id}) }}"
+                       class="admin-btn admin-btn-secondary">
                         Editar
                     </a>
 
@@ -43,8 +42,11 @@
         </tbody>
     </table>
 
-    <p style="margin-top:20px;">
+    <div class="admin-back">
         <a href="{{ path('admin_dashboard') }}">← Volver al panel</a>
-    </p>
+    </div>
+
 </div>
 {% endblock %}
+
+

@@ -2,24 +2,33 @@
 
 {% block title %}Panel de Administración{% endblock %}
 
-{% block body %}
-<h1>Panel de Administración</h1>
-
-<p>
-    Bienvenido, <strong>{{ app.user.email }}</strong>
-</p>
-
-<hr>
-
-<ul>
-    <li>
-        <a href="{{ path('app_categoria_index') }}">Gestionar categorías</a>
-    </li>
-    <li>
-        <a href="{{ path('app_articulo_index') }}">Gestionar artículos</a>
-    </li>
-</ul>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 {% endblock %}
+
+{% block body %}
+<div class="admin-wrapper">
+    <div class="admin-card">
+        <h1>Panel de Administración</h1>
+
+        <p class="admin-welcome">
+            Bienvenido, <strong>{{ app.user.email }}</strong>
+        </p>
+
+        <div class="admin-actions">
+            <a href="{{ path('app_categoria_index') }}" class="admin-btn">
+                Gestionar categorías
+            </a>
+
+            <a href="{{ path('app_articulo_index') }}" class="admin-btn">
+                Gestionar artículos
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
 
 
 
