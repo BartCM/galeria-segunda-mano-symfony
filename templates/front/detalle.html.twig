@@ -2,21 +2,59 @@
 
 {% block title %}{{ articulo.titulo }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/front.css') }}">
+{% endblock %}
+
 {% block body %}
-<h1>{{ articulo.titulo }}</h1>
+<div class="front-container">
 
-{% if articulo.imagen %}
-    <img src="{{ asset('uploads/articulos/' ~ articulo.imagen) }}"
-         style="max-width:400px; margin-bottom:20px;">
-{% endif %}
+    <h1>{{ articulo.titulo }}</h1>
 
-<p><strong>Precio:</strong> {{ articulo.precio }} €</p>
-<p><strong>Categoría:</strong> {{ articulo.categoria.nombre }}</p>
-<p><strong>Publicado por:</strong> {{ articulo.usuario.email }}</p>
+    <p style="color:#666; margin-bottom:10px;">
+        Publicado el {{ articulo.fechaCreacion|date('d/m/Y') }}
+        por
+        <a href="{{ path('front_index', { usuario: articulo.usuario.id }) }}">
+            {{ articulo.usuario.nombreUsuario }}
+        </a>
+    </p>
 
-<p>{{ articulo.descripcion }}</p>
+    <div style="margin-bottom:20px;">
+        <img
+            src="{{
+                articulo.imagen
+                    ? asset('uploads/articulos/' ~ articulo.imagen)
+                    : asset('images/sinImagen.png')
+            }}"
+            style="max-width:400px; border:1px solid #ccc;"
+        >
+    </div>
 
-<p>
-    <a href="{{ path('front_index') }}">← Volver al listado</a>
-</p>
+    <p>
+        {{ articulo.descripcion }}
+    </p>
+
+    {% if app.user and app.user != articulo.usuario %}
+        <form method="post" action="{{ path('articulo_comprar', {id: articulo.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('comprar' ~ articulo.id) }}">
+            <button class="front-button">
+                Comprar artículo
+            </button>
+        </form>
+    {% endif %}
+
+
+    {% if app.user and app.user == articulo.usuario %}
+        <p style="margin-top:20px;">
+            <a href="{{ path('app_articulo_edit', {id: articulo.id}) }}">
+                Editar artículo
+            </a>
+        </p>
+    {% endif %}
+
+    <p style="margin-top:30px;">
+        <a href="{{ path('front_index') }}">Volver</a>
+    </p>
+
+</div>
 {% endblock %}

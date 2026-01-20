@@ -33,17 +33,20 @@
         {% for articulo in articulos %}
             <tr>
                 <td>
-                    {% if articulo.imagen %}
-                        <img src="{{ asset('uploads/articulos/' ~ articulo.imagen) }}"
-                             class="admin-img">
-                    {% else %}
-                        —
-                    {% endif %}
+                    <img
+                        src="{{
+                            articulo.imagen
+                                ? asset('uploads/articulos/' ~ articulo.imagen)
+                                : asset('images/sinImagen.png')}}"
+                        alt="Imagen"
+                        style="width:80px;"
+                        class="admin-img">
                 </td>
+                                    
                 <td>{{ articulo.titulo }}</td>
                 <td>{{ articulo.precio }} €</td>
                 <td>{{ articulo.categoria.nombre }}</td>
-                <td>{{ articulo.usuario.email }}</td>
+                <td>{{ articulo.usuario.nombreUsuario }}</td>
                 <td>{{ articulo.fechaCreacion|date('d/m/Y') }}</td>
                 <td class="admin-actions">
                     <a href="{{ path('app_articulo_edit', {'id': articulo.id}) }}"
@@ -64,9 +67,15 @@
         </tbody>
     </table>
 
-    <div class="admin-back">
-        <a href="{{ path('admin_dashboard') }}">← Volver al panel</a>
-    </div>
+    <p style="margin-top:20px;">
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_dashboard') }}">Volver al panel</a>
+        {% else %}
+            <a href="{{ path('front_index') }}">Volver a la página principal</a>
+            {# o si prefieres volver a su zona privada: #}
+            {# <a href="{{ path('app_articulo_index') }}">← Volver a Mis artículos</a> #}
+        {% endif %}
+    </p>
 
 </div>
 {% endblock %}

@@ -104,7 +104,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        // No datos sensibles temporales
     }
 
     /**

@@ -1,22 +1,71 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Artículos en venta{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/front.css') }}">
 {% endblock %}
-
 
 {% block body %}
 <div class="front-container">
     <h1>Artículos en venta</h1>
 
+    <form method="get" style="margin-bottom:20px; display:flex; gap:12px; align-items:end; flex-wrap:wrap;">
+        <div>
+            <label for="q"><strong>Buscar</strong></label><br>
+            <input
+                type="text"
+                id="q"
+                name="q"
+                value="{{ q }}"
+                placeholder="Buscar por título o descripción"
+            >
+        </div>
+        
+        <div>
+            <label for="categoria"><strong>Categoría</strong></label><br>
+            <select name="categoria" id="categoria">
+                <option value="">Todas</option>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}"
+                        {% if categoriaSeleccionada == categoria.id %}selected{% endif %}
+                    >
+                        {{ categoria.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="desde"><strong>Desde</strong></label><br>
+            <input type="date" id="desde" name="desde" value="{{ desde }}">
+        </div>
+
+        <div>
+            <label for="hasta"><strong>Hasta</strong></label><br>
+            <input type="date" id="hasta" name="hasta" value="{{ hasta }}">
+        </div>
+
+        <div>
+            <button type="submit" class="front-button">Filtrar</button>
+            <a href="{{ path('front_index') }}" class="front-button" style="background:#6c757d; margin-left:8px;">
+                Limpiar
+            </a>
+        </div>
+    </form>
+
     <div class="front-grid">
         {% for articulo in articulos %}
             <div class="front-card">
-                {% if articulo.imagen %}
-                    <img src="{{ asset('uploads/articulos/' ~ articulo.imagen) }}"
-                         class="front-card-img">
-                {% endif %}
+                <img
+                    src="{{
+                        articulo.imagen
+                            ? asset('uploads/articulos/' ~ articulo.imagen)
+                            : asset('images/sinImagen.png')
+                    }}"
+                    class="front-card-img"
+                    alt="Imagen del artículo"
+                >
 
                 <div class="front-card-body">
                     <h3>{{ articulo.titulo }}</h3>
@@ -45,4 +94,3 @@
     </div>
 </div>
 {% endblock %}
-

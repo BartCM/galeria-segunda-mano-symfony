@@ -30,7 +30,6 @@ class RegistroController extends AbstractController
 
         $usuario = new Usuario();
 
-        // ✅ Generar CAPTCHA SOLO en GET
         if (!$request->isMethod('POST')) {
             $captchaCode = random_int(10000, 99999);
             $request->getSession()->set('captcha_code', $captchaCode);

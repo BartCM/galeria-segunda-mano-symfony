@@ -23,7 +23,7 @@ class Articulo
     #[ORM\Column]
     private ?float $precio = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagen = null;
 
     #[ORM\Column]
