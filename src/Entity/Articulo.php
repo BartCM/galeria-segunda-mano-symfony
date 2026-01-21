@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ArticuloRepositorio;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: ArticuloRepositorio::class)]
 class Articulo
@@ -36,10 +38,17 @@ class Articulo
     #[ORM\ManyToOne(inversedBy: 'articulos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categoria $categoria = null;
+    
+    /**
+     * @var Collection<int, Operacion>
+     */
+    #[ORM\OneToMany(mappedBy: 'articulo', targetEntity: Operacion::class)]
+    private Collection $operaciones;
 
     public function __construct()
     {
         $this->fechaCreacion = new \DateTimeImmutable();
+        $this->operaciones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,5 +132,19 @@ class Articulo
         $this->categoria = $categoria;
         return $this;
     }
+
+    /**
+     * @return Collection<int, Operacion>
+     */
+    public function getOperaciones(): Collection
+    {
+        return $this->operaciones;
+    }
+
+    public function tieneOperaciones(): bool
+    {
+        return !$this->operaciones->isEmpty();
+    }
+
 }
 

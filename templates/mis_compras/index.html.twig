@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis compras{% endblock %}
+
+{% block body %}
+<div class="admin-container">
+    <h1>Mis compras</h1>
+
+    {% if operaciones is empty %}
+        <p>No has realizado ninguna compra todavía.</p>
+    {% else %}
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Artículo</th>
+                    <th>Precio</th>
+                    <th>Vendedor</th>
+                    <th>Fecha</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for operacion in operaciones %}
+                    <tr>
+                        <td>{{ operacion.articulo.titulo }}</td>
+                        <td>{{ operacion.articulo.precio }} €</td>
+                        <td>{{ operacion.articulo.usuario.nombreUsuario }}</td>
+                        <td>{{ operacion.fecha|date('d/m/Y H:i') }}</td>
+                        <td>
+                            <a href="{{ path('front_articulo_detalle', {id: operacion.articulo.id}) }}">
+                                Ver artículo
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,49 +1,61 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('css/front.css') }}">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/front.css') }}">
+    </head>
+    
+    <body>
+        <nav class="front-nav">
+            <div class="nav-left">
+                <a href="{{ path('front_index') }}">Artículos en venta</a>
+            </div>
 
-<nav class="front-nav">
-    <div class="nav-left">
-        <a href="{{ path('front_index') }}">Artículos en venta</a>
-    </div>
+            <div class="brand">
+                Galería Segunda Mano
+            </div>
 
-    <div class="brand">
-        Galería Segunda Mano
-    </div>
+            <div class="nav-right">
+                {% if app.user %}
+                    <span class="nav-user">
+                        {{ app.user.nombreUsuario }}
+                    </span>
 
-    <div class="nav-right">
-        {% if app.user %}
-            <span class="nav-user">
-                {{ app.user.nombreUsuario }}
-            </span>
+                    <a href="{{ path('app_perfil') }}">Mi perfil</a>
+                    <a href="{{ path('app_mis_compras') }}">Mis compras</a>
 
-            <a href="{{ path('app_perfil') }}">Mi perfil</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('admin_dashboard') }}">Panel admin</a>
+                        <a href="{{ path('admin_usuario_index') }}">Usuarios</a>
+                    {% endif %}
 
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('admin_dashboard') }}">Panel admin</a>
-                <a href="{{ path('admin_usuario_index') }}">Usuarios</a>
-            {% endif %}
+                    <a href="{{ path('app_articulo_index') }}">Mis artículos</a>
 
-            <a href="{{ path('app_articulo_index') }}">Mis artículos</a>
+                    <a href="{{ path('app_logout') }}">Cerrar sesión</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Iniciar sesión</a>
+                    <a href="{{ path('app_registro') }}">Registrarse</a>
+                {% endif %}
+            </div>
+        </nav>
 
-            <a href="{{ path('app_logout') }}">Cerrar sesión</a>
-        {% else %}
-            <a href="{{ path('app_login') }}">Iniciar sesión</a>
-            <a href="{{ path('app_registro') }}">Registrarse</a>
-        {% endif %}
-    </div>
-</nav>
+        {# MENSAJES FLASH #}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 
-<div class="{% block page_class %}page-default{% endblock %}">
-    {% block body %}{% endblock %}
-</div>
+        <div class="{% block page_class %}page-default{% endblock %}">
+            {% block body %}{% endblock %}
+        </div>
 
-
-</body>
+    </body>
 </html>

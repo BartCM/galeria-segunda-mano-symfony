@@ -113,16 +113,26 @@ final class ArticuloController extends AbstractController
     ): Response {
         $usuario = $this->getUser();
 
-        if (
-            !$this->isGranted('ROLE_ADMIN') &&
-            $articulo->getUsuario() !== $usuario
-        ) {
+        if (!$this->isGranted('ROLE_ADMIN') && $articulo->getUsuario() !== $usuario) 
+        {
             throw $this->createAccessDeniedException('No puedes eliminar este artículo.');
         }
 
-        if ($this->isCsrfTokenValid('delete'.$articulo->getId(), $request->getPayload()->getString('_token'))) {
+        if ($articulo->getOperaciones()->count() > 0) {
+            $this->addFlash(
+                'error',
+                'No se puede eliminar el artículo porque tiene compras asociadas.'
+            );
+
+            return $this->redirectToRoute('app_articulo_index');
+        }
+
+        if ($this->isCsrfTokenValid('delete'.$articulo->getId(),$request->request->get('_token'))) 
+        {
             $entityManager->remove($articulo);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Artículo eliminado correctamente.');
         }
 
         return $this->redirectToRoute('app_articulo_index');

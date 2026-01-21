@@ -13,15 +13,9 @@
     <form method="get" style="margin-bottom:20px; display:flex; gap:12px; align-items:end; flex-wrap:wrap;">
         <div>
             <label for="q"><strong>Buscar</strong></label><br>
-            <input
-                type="text"
-                id="q"
-                name="q"
-                value="{{ q }}"
-                placeholder="Buscar por título o descripción"
-            >
+            <input type="text" id="q" name="q" value="{{ q }}" placeholder="Buscar por título o descripción">
         </div>
-        
+
         <div>
             <label for="categoria"><strong>Categoría</strong></label><br>
             <select name="categoria" id="categoria">
@@ -48,7 +42,7 @@
 
         <div>
             <button type="submit" class="front-button">Filtrar</button>
-            <a href="{{ path('front_index') }}" class="front-button" style="background:#6c757d; margin-left:8px;">
+            <a href="{{ path('front_index') }}" class="front-button" style="background:#6c757d;">
                 Limpiar
             </a>
         </div>
@@ -57,11 +51,12 @@
     <div class="front-grid">
         {% for articulo in articulos %}
             <div class="front-card">
+
+                <!-- Imagen del artículo -->
                 <img
-                    src="{{
-                        articulo.imagen
-                            ? asset('uploads/articulos/' ~ articulo.imagen)
-                            : asset('images/sinImagen.png')
+                    src="{{ articulo.imagen
+                        ? asset('uploads/articulos/' ~ articulo.imagen)
+                        : asset('images/sinImagen.png')
                     }}"
                     class="front-card-img"
                     alt="Imagen del artículo"
@@ -69,6 +64,26 @@
 
                 <div class="front-card-body">
                     <h3>{{ articulo.titulo }}</h3>
+
+                    <!-- Usuario + avatar + fecha -->
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                        <img
+                            src="{{ articulo.usuario.avatar
+                                ? asset('uploads/avatars/' ~ articulo.usuario.avatar)
+                                : asset('images/imagenPorDefecto.png')
+                            }}"
+                            width="32"
+                            height="32"
+                            style="border-radius:50%; object-fit:cover;"
+                        >
+
+                        <div style="font-size:13px; color:#555;">
+                            {{ articulo.usuario.nombreUsuario }}<br>
+                            <span style="font-size:12px;">
+                                {{ articulo.fechaCreacion|date('d/m/Y') }}
+                            </span>
+                        </div>
+                    </div>
 
                     <p class="categoria">
                         {{ articulo.categoria.nombre }}
@@ -86,6 +101,14 @@
                        class="front-button">
                         Ver detalle
                     </a>
+
+                    {# Opción editar si es propietario #}
+                    {% if app.user and articulo.usuario == app.user %}
+                        <a href="{{ path('app_articulo_edit', {id: articulo.id}) }}"
+                           style="margin-left:8px; font-size:13px;">
+                            Editar
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         {% else %}
