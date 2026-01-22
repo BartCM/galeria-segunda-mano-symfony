@@ -1,110 +1,203 @@
-/* ===== ADMIN GENERAL ===== */
+/* =========================
+   DASHBOARD ADMIN (solo panel)
+   ========================= */
 
-.admin-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
+.admin-wrapper {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* ===== CABECERA ===== */
+.admin-wrapper .admin-card {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 10px;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+}
+
+.admin-wrapper .admin-card h1 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.9rem;
+    color: #2c3e50;
+}
+
+.admin-wrapper .admin-welcome {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #555;
+    font-size: 1rem;
+}
+
+/* OJO: encapsulado para que NO afecte a td.admin-actions */
+.admin-wrapper .admin-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.admin-wrapper .admin-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background-color: #3498db;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 6px;
+    text-align: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.admin-wrapper .admin-btn:hover {
+    background-color: #2f89c5;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .admin-wrapper .admin-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   LISTADOS ADMIN (tablas)
+   ========================= */
+
+.admin-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
 .admin-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 18px;
 }
 
-.admin-header h1 {
-    margin: 0;
-}
-
-/* ===== BOTONES ===== */
-
-.admin-btn {
-    padding: 8px 14px;
-    background-color: #0d6efd;
+/* Botón “+ Nuevo artículo” (grande pero no exagerado) */
+.admin-header .admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    background-color: #3498db;
     color: #fff;
     text-decoration: none;
-    border-radius: 4px;
-    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+/* Tabla */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.admin-table th {
+    background: #f4f6f8;
+    color: #333;
     font-weight: 600;
 }
 
-.admin-btn:hover {
-    background-color: #0b5ed7;
+/* Celda acciones: en fila (NO grid) */
+.admin-table td.admin-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    white-space: nowrap;
 }
 
-.admin-btn-danger {
-    background-color: #dc3545;
+/* Botones dentro de la tabla: compactos */
+.admin-table .admin-btn,
+.admin-table button.admin-btn,
+.admin-table a.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    border-radius: 4px;
 }
 
-.admin-btn-danger:hover {
-    background-color: #bb2d3b;
-}
-
+/* “Editar” secundario legible */
 .admin-btn-secondary {
     background-color: #6c757d;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
 }
 
 .admin-btn-secondary:hover {
     background-color: #5a6268;
 }
 
-/* ===== TABLA ===== */
-
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-}
-
-.admin-table th,
-.admin-table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-
-.admin-table th {
-    background-color: #f5f5f5;
-    font-weight: 600;
-}
-
-.admin-actions {
-    display: flex;
-    gap: 8px;
-}
-
-/* ===== ENLACE VOLVER ===== */
-
-.admin-back {
-    margin-top: 20px;
-}
-
-/* Imagen en listado de artículos */
-.admin-img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-}
-
-/* ===== FORMULARIOS ADMIN ===== */
+/* =========================
+   FORMULARIO ARTÍCULOS
+   ========================= */
 
 .admin-form {
-    max-width: 500px;
+    max-width: 520px;
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
 }
 
-.admin-image-block {
+/* Espacio entre campos */
+.admin-form .form-row,
+.admin-form .form-group {
     margin-bottom: 15px;
 }
 
-.admin-preview-img {
-    max-width: 200px;
+/* Inputs y selects */
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 4px;
     border: 1px solid #ccc;
-    padding: 5px;
+    font-size: 0.9rem;
+}
+
+/* Labels */
+.admin-form label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Imagen actual y preview */
+.admin-form img {
+    max-width: 200px;
     border-radius: 6px;
-    background: #fff;
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+
+/* Botón guardar */
+.admin-form .admin-btn {
+    margin-top: 10px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
 }

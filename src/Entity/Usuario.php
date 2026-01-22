@@ -150,4 +150,9 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function puedeEliminarse(): bool
+    {
+        return $this->articulos->isEmpty();
+    }
+
 }

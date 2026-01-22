@@ -2,10 +2,6 @@
 
 {% block title %}{{ articulo.titulo }}{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/front.css') }}">
-{% endblock %}
-
 {% block body %}
 <div class="front-container">
 
@@ -69,7 +65,8 @@
     {% endif %}
 
     <p style="margin-top:30px;">
-        <a href="{{ path('front_index') }}">Volver al listado</a>
+        <a href="{{ path('front_index') }}" class="front-button">Volver al listado</a>
+        <a href="{{ path('app_mis_compras') }}" class="front-button">Volver a mis compras</a>
     </p>
 
 </div>

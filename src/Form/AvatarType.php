@@ -14,6 +14,11 @@ class AvatarType extends AbstractType
         $builder->add('avatar', FileType::class, [
             'mapped' => false,
             'label' => 'Cambiar avatar',
+            'attr' => [
+                'id' => 'avatar-input',
+                'accept' => 'image/png, image/jpeg',
+                'onchange' => 'previewAvatar(event)',
+            ],
             'constraints' => [
                 new File(
                     maxSize: '10k',

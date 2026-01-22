@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Usuario;
-use App\Form\PerfilType;
+use App\Form\CambiarPasswordType;
+use App\Form\AvatarType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Form\CambiarPasswordType;
-use App\Form\AvatarType;
 
 #[IsGranted('ROLE_USER')]
 class PerfilController extends AbstractController
@@ -23,27 +22,25 @@ class PerfilController extends AbstractController
         EntityManagerInterface $em,
         UserPasswordHasherInterface $passwordHasher
     ): Response {
-        /** @var \App\Entity\Usuario $usuario */
+        /** @var Usuario $usuario */
         $usuario = $this->getUser();
 
-
-        // Form contraseña
         $passwordForm = $this->createForm(CambiarPasswordType::class);
         $passwordForm->handleRequest($request);
 
         if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
+            $plainPassword = $passwordForm->get('password')->getData();
+
             $usuario->setPassword(
-                $passwordHasher->hashPassword(
-                    $usuario,
-                    $passwordForm->get('password')->getData()
-                )
+                $passwordHasher->hashPassword($usuario, $plainPassword)
             );
+
             $em->flush();
             $this->addFlash('success', 'Contraseña actualizada');
+
             return $this->redirectToRoute('app_perfil');
         }
 
-        // Form avatar
         $avatarForm = $this->createForm(AvatarType::class);
         $avatarForm->handleRequest($request);
 
@@ -51,25 +48,41 @@ class PerfilController extends AbstractController
             $file = $avatarForm->get('avatar')->getData();
 
             if ($file) {
-                $filename = uniqid().'.'.$file->guessExtension();
-
-                $file->move(
-                    $this->getParameter('kernel.project_dir').'/public/uploads/avatars',
-                    $filename
+                $image = imagecreatefromstring(
+                    file_get_contents($file->getPathname())
                 );
+
+                $resized = imagecreatetruecolor(100, 100);
+                imagecopyresampled(
+                    $resized,
+                    $image,
+                    0, 0, 0, 0,
+                    100, 100,
+                    imagesx($image),
+                    imagesy($image)
+                );
+
+                $filename = uniqid() . '.png';
+                $path = $this->getParameter('kernel.project_dir')
+                    . '/public/uploads/avatars/' . $filename;
+
+                imagepng($resized, $path);
+
+                unset($image, $resized);
 
                 $usuario->setAvatar($filename);
                 $em->flush();
 
                 $this->addFlash('success', 'Avatar actualizado');
+
                 return $this->redirectToRoute('app_perfil');
             }
         }
 
         return $this->render('perfil/index.html.twig', [
+            'usuario' => $usuario,
             'passwordForm' => $passwordForm->createView(),
             'avatarForm' => $avatarForm->createView(),
-            'usuario' => $usuario,
         ]);
     }
 }

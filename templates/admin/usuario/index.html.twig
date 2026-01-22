@@ -7,11 +7,20 @@
 
     <h1>Gestión de usuarios</h1>
 
+    <form method="get" class="admin-filter">
+        <label for="rol">Filtrar por tipo:</label>
+        <select name="rol" id="rol" onchange="this.form.submit()">
+            <option value="">Todos</option>
+            <option value="ROLE_USER" {{ rol_actual == 'ROLE_USER' ? 'selected' }}>Usuario</option>
+            <option value="ROLE_ADMIN" {{ rol_actual == 'ROLE_ADMIN' ? 'selected' }}>Administrador</option>
+        </select>
+    </form>
+
     <table class="admin-table">
         <thead>
             <tr>
                 <th>Email</th>
-                <th>Roles</th>
+                <th>Tipo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -19,20 +28,52 @@
         {% for usuario in usuarios %}
             <tr>
                 <td>{{ usuario.email }}</td>
-                <td>{{ usuario.roles|join(', ') }}</td>
+
+                {# TIPO DE USUARIO LEGIBLE #}
                 <td>
+                    {% if 'ROLE_ADMIN' in usuario.roles %}
+                        Administrador
+                    {% else %}
+                        Usuario
+                    {% endif %}
+                </td>
+
+                <td>
+                    {# CAMBIAR TIPO DE USUARIO #}
+                    <form method="post"
+                        action="{{ path('admin_usuario_rol', {id: usuario.id}) }}"
+                        style="display:inline-block;">
+                        <input type="hidden" name="_token"
+                            value="{{ csrf_token('rol' ~ usuario.id) }}">
+                        <select name="rol">
+                            <option value="ROLE_USER"
+                                {{ 'ROLE_USER' in usuario.roles ? 'selected' }}>
+                                Usuario
+                            </option>
+                            <option value="ROLE_ADMIN"
+                                {{ 'ROLE_ADMIN' in usuario.roles ? 'selected' }}>
+                                Administrador
+                            </option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Cambiar</button>
+                    </form>
+
+                    {# ELIMINAR USUARIO (SOLO SI NO ES ADMIN) #}
                     {% if 'ROLE_ADMIN' not in usuario.roles %}
                         <form method="post"
                               action="{{ path('admin_usuario_delete', {id: usuario.id}) }}"
-                              onsubmit="return confirm('¿Eliminar usuario?');">
+                              onsubmit="return confirm('¿Eliminar usuario?');"
+                              style="display:inline-block;">
                             <input type="hidden" name="_token"
                                    value="{{ csrf_token('delete' ~ usuario.id) }}">
                             <button class="btn btn-danger">Eliminar</button>
                         </form>
-                    {% else %}
-                        —
                     {% endif %}
                 </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No hay usuarios para mostrar.</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -5,7 +5,17 @@
 {% block body %}
     <h1>Mi perfil</h1>
 
-    <img src="{{ asset('uploads/avatars/' ~ usuario.avatar) }}" width="100" height="100">
+    <section>
+        <h2>Datos del usuario</h2>
+        <p>Email: {{ usuario.email }}</p>
+        <p>Usuario: {{ usuario.nombreUsuario }}</p>
+        <img src="{{ asset(usuario.avatar ? 'uploads/avatars/' ~ usuario.avatar
+                    : 'images/imagenPorDefecto.png') }}"
+            alt="Avatar"
+            width="100"
+            height="100"
+        >
+    </section>
 
     <h2>Cambiar contraseña</h2>
     {{ form_start(passwordForm) }}
