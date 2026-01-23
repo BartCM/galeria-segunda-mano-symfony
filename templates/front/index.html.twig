@@ -101,7 +101,7 @@
                     {# Opción editar si es propietario #}
                     {% if app.user and articulo.usuario == app.user %}
                         <a href="{{ path('app_articulo_edit', {id: articulo.id}) }}"
-                           style="margin-left:8px; font-size:13px;">
+                           class="admin-btn-secondary">
                             Editar
                         </a>
                     {% endif %}

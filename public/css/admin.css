@@ -201,3 +201,15 @@
     padding: 10px 16px;
     font-size: 0.9rem;
 }
+
+/* Botón pequeño para acciones en tablas */
+.admin-btn-small {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    border-radius: 4px;
+}
+.admin-btn-secondary {
+    font-size: 0.9rem;
+}
+
